@@ -7,7 +7,7 @@ let USERS = [
 ];
 
 
-const App = () => {
+const Lesson_11 = () => {
     const changeName = (arrUsers, id, newName) => {
         return arrUsers.map( (user) => {
         if (user.id === id) {
@@ -52,4 +52,4 @@ function generateCustomKey(objUser) {
     return `${objUser.name}_${objUser.surname}_${objUser.age}`
 }
 
-export default App;
+export default Lesson_11;

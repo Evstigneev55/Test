@@ -6,7 +6,7 @@
 // ];
 
 
-const App = () => {
+const Lesson_12 = () => {
     const onChangeInputElement = (event) => {
         console.log('On Change (Input) . value: ', event.target.value)
     }
@@ -31,4 +31,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Lesson_12;
