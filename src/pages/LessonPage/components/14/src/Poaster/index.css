@@ -1,0 +1,25 @@
+.poster {
+    display: block;
+    width: 300px;
+    height: 500px;
+}
+
+.poster__img {
+    height: 350px;
+    width: inherit;
+    object-fit: cover;
+}
+
+.poster__h2 {
+    text-align: center;
+}
+
+.poster__h4 {
+    text-align: center;
+    color: gray;
+}
+
+.poster__author {
+    text-align: right;
+    padding-right: 10px;
+}

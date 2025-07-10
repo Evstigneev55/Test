@@ -1,0 +1,21 @@
+.poster {
+    display: block;
+    width: 300px;
+    height: 500px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.poster img {
+    height: 350px;
+    width: inherit;
+    object-fit: cover;
+}
+
+.poster h2 {
+    text-align: center;
+}
+
+.poster h4 {
+    text-align: center;
+    color: gray;
+}
