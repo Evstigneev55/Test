@@ -40,3 +40,10 @@
 .read-the-docs {
   color: #888;
 }
+
+.choose-timer-page a {
+  padding: 20px;
+  margin: 0 10px;
+  background-color: black;
+  border-radius: 5px;
+}
