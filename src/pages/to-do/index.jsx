@@ -1,33 +1,66 @@
+import { useEffect, useState } from "react";
+
+import './index.css'
+
 const ToDoApp = () => {
-  function addTask() {
-    const newTaskInputElement = document.getElementById("newTaskInput");
-    const newTaskText = newTaskInputElement.value;
+  let initArrTasks = [];
 
-    let lastIndex = localStorage.getItem("lastTaskIndex") ?? 0;
+  useEffect(() => {
+    if (
+      localStorage.getItem("arrTasks") !== null &&
+      localStorage.getItem("arrTasks") !== "" &&
+      localStorage.getItem("arrTasks") !== undefined
+    ) {
+      const arrTasks = localStorage.getItem("arrTasks") ?? [""];
+      initArrTasks = arrTasks.split(",");
+    } else {
+      localStorage.setItem("arrTasks", "");
+    }
+  }, []);
 
-    lastIndex++;
+  const [tasks, setTasks] = useState(initArrTasks);
 
-    localStorage.setItem(lastIndex, newTaskText);
-
-    localStorage.setItem("lastTaskIndex", lastIndex);
+  function delTask(index) {
+    const newArrTasks = tasks.filter((_, i) => i !== index);
+    setTasks(newArrTasks);
   }
-  function delTask() {}
-  function showTasks(tasksFromStorage) {}
+
+  function addTask() {
+    const newTaskInputElement = document.getElementById("newTask");
+    const newTaskText = newTaskInputElement.value.trim();
+
+    if (newTaskText !== "") setTasks((tasks) => [...tasks, newTaskText]);
+    else alert("Write your task in input area");
+  }
+
+  // При обновлении задач, обновляем и запись в localStorage
+  useEffect(() => {
+    localStorage.setItem("arrTasks", tasks);
+  }, [tasks]);
 
   return (
-    <>
-      <h1>Your tasks list</h1>
-      <input
-        id="newTaskInput"
-        type="text"
-        placeholder="Write your new task here!"
-      />
-      <button onClick={addTask}>Add task</button>
-    </>
+    <div className="to-do-App">
+      <h1 className="to-do-App__h1">to-do</h1>
+
+      <div className="to-do-App__Area-Input">
+        <input
+          id="newTask"
+          type="text"
+          placeholder="Write your new task here!"
+        />
+        <button onClick={addTask} className="to-do-App__Add-btn">add</button>
+      </div>
+
+      <ol>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            <span>{task}</span>
+            <button onClick={() => delTask(index)}>delete</button>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 };
-
-// Циклом вывести все задачи, что есть в localStorage
-//
 
 export default ToDoApp;

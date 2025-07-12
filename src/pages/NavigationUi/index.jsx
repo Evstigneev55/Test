@@ -6,7 +6,7 @@ function NavigationUi() {
   return (
     <nav>
       <h1>Choose Lesson Task:</h1>
-      <ul>
+      <ul className="navigationUi-styles">
         <li>
           <Link to="8">8-th lesson</Link>
         </li>

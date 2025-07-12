@@ -8,16 +8,16 @@ import App from "./App.jsx";
 import LoginPage from "./pages/Login";
 import NavigationUi from "./pages/NavigationUi/index.jsx";
 import LessonPage from "./pages/LessonPage";
-import ToDoApp from "./pages/to-do/index.jsx";
+import ToDoApp from "./pages/to-do";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  <>
     <BrowserRouter>
       <Routes>
         <Route index element={<App />} />
         <Route path="login" element={<LoginPage />} />
 
-        <Route path="to-do" element={<ToDoApp/>} />
+        <Route path="to-do" element={<ToDoApp />} />
 
         <Route path="lessons">
           <Route index element={<NavigationUi />} />
@@ -25,5 +25,5 @@ createRoot(document.getElementById("root")).render(
         </Route>
       </Routes>
     </BrowserRouter>
-  </StrictMode>
+  </>
 );

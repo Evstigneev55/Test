@@ -1,0 +1,21 @@
+.to-do-App__h1 {
+    font-size: 4rem;
+}
+
+.to-do-App button {
+    font-size: 1.7rem;
+    font-weight: 300px;
+    padding: 12px 20px;
+    cursor: pointer;
+    /* это что делает? */
+    transition: background-color 0.5 ease;    
+    /* это что делает? */
+
+}
+
+.to-do-App__Add-btn {
+    background-color: green;
+}
+.to-do-App__Add-btn::hower {
+    background-color: rgb(1, 11, 97);
+}
