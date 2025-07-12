@@ -1,3 +1,7 @@
+.to-do-App {
+    text-align: center;
+}
+
 .to-do-App__h1 {
     font-size: 4rem;
 }
@@ -21,5 +25,30 @@
     background-color: rgb(0, 34, 128);
 }
 .to-do-App__Area-Input input{
-    padding: 20px;
+    font-size: 1.6rem;
+    padding: 10px;
+}
+
+.del-btn {
+    background-color: red;
+}
+
+.to-do-App__ol {
+    padding: 0;
+    list-style-type: none;
+}
+.to-do-App__ol li {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: rgba(67, 67, 67, 0.351);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+.to-do-App__ol li span {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
 }

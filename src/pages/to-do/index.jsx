@@ -69,11 +69,11 @@ const ToDoApp = () => {
         </button>
       </div>
 
-      <ol>
+      <ol className="to-do-App__ol">
         {tasks.map((task, index) => (
           <li key={index}>
             <span>{task}</span>
-            <button onClick={() => delTask(index)}>delete</button>
+            <button className="del-btn" onClick={() => delTask(index)}>delete</button>
           </li>
         ))}
       </ol>
