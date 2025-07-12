@@ -26,7 +26,7 @@ function App() {
     return () => clearInterval(timerId);
   }, []);
 
-  // этот useEffect нужен, чтобы избежать вызова навигации во время рендера компонента App
+  // этот useEffect, чтобы не вызовать навигацию во время рендера компонента App
   useEffect(() => {
     if (count === 0) navigate("/to-do");
   }, [count]);

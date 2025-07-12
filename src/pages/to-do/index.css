@@ -4,8 +4,8 @@
 
 .to-do-App button {
     font-size: 1.7rem;
-    font-weight: 300px;
-    padding: 12px 20px;
+    font-weight: bold;
+    padding: 10px 20px;
     cursor: pointer;
     /* это что делает? */
     transition: background-color 0.5 ease;    
@@ -14,8 +14,12 @@
 }
 
 .to-do-App__Add-btn {
-    background-color: green;
-}
-.to-do-App__Add-btn::hower {
     background-color: rgb(1, 11, 97);
+}
+.to-do-App__Add-btn:hover {
+    transition: 0.5s;
+    background-color: rgb(0, 34, 128);
+}
+.to-do-App__Area-Input input{
+    padding: 20px;
 }
