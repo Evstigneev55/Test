@@ -1,28 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import "./index.css";
+import './index.css';
 
+// Массив для иницилизации Массива задач (tasks[]), если есть записи в localStorage
 let initArrTasks = [];
 
 const ToDoApp = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    
     //? Заменить условия ниже на if(localStorage.getItem)
-    
+
     if (
-      localStorage.getItem("arrTasks") !== null &&
-      localStorage.getItem("arrTasks") !== "" && 
-      localStorage.getItem("arrTasks") !== undefined
+      localStorage.getItem('arrTasks') !== null &&
+      localStorage.getItem('arrTasks') !== '' &&
+      localStorage.getItem('arrTasks') !== undefined
     ) {
-      const arrTasks = localStorage.getItem("arrTasks");
-      initArrTasks = arrTasks.split(",");
-      console.log("Eсть записи в localStorage");
+      const arrTasks = localStorage.getItem('arrTasks');
+      initArrTasks = arrTasks.split(',');
+      console.log('Eсть записи в localStorage');
       setTasks(initArrTasks);
     } else {
-      localStorage.setItem("arrTasks", "");
-      console.log("Нет записей в localStorage");
+      localStorage.setItem('arrTasks', '');
+      console.log('Нет записей в localStorage');
     }
   }, []);
 
@@ -34,23 +34,23 @@ const ToDoApp = () => {
 
   // Находит нужный input элемент и добает текст в массив задач
   function addTask() {
-    const newTaskInputElement = document.getElementById("newTask");
+    const newTaskInputElement = document.getElementById('newTask');
     const newTaskText = newTaskInputElement.value.trim();
 
-    if (newTaskText !== "") {
+    if (newTaskText !== '') {
       setTasks((tasks) => [...tasks, newTaskText]);
-      newTaskInputElement.value = "";
-    } else alert("Write your task in input area");
+      newTaskInputElement.value = '';
+    } else alert('Write your task in input area');
   }
 
   // Обработчик нажатия на Enter в поле ввода input
   function addTaskOnKeyDown(event) {
-    if (event.key === "Enter") addTask();
+    if (event.key === 'Enter') addTask();
   }
 
   // При изменении задач, обновляем и запись в localStorage
   useEffect(() => {
-    localStorage.setItem("arrTasks", tasks);
+    localStorage.setItem('arrTasks', tasks);
   }, [tasks]);
 
   return (
@@ -73,7 +73,9 @@ const ToDoApp = () => {
         {tasks.map((task, index) => (
           <li key={index}>
             <span>{task}</span>
-            <button className="del-btn" onClick={() => delTask(index)}>delete</button>
+            <button className="del-btn" onClick={() => delTask(index)}>
+              delete
+            </button>
           </li>
         ))}
       </ol>
