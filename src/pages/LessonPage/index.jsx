@@ -17,11 +17,11 @@ const LessonPage = () => {
       return <Lesson_9 />;
     case "10":
       return <Lesson_10 />;
-      case "11":
-        return <Lesson_11 />;
-      case "12":
-        return <Lesson_12 />;
-    }
+    case "11":
+      return <Lesson_11 />;
+    case "12":
+      return <Lesson_12 />;
+  }
 
   return <Navigate to={"/404"} />;
 };

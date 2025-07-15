@@ -1,11 +1,11 @@
-import './index.css'
+import './index.css';
 
 const BoxShadowWrapper = (props) => {
-    return (
-        <div className="shadow">
-            {props.children}
-        </div>
-    )
-}
+  return (
+    <div className="shadow">
+      {props.children}
+    </div>
+  );
+};
 
-export default BoxShadowWrapper
+export default BoxShadowWrapper;

@@ -12,18 +12,20 @@ import ToDoApp from "./pages/to-do";
 
 createRoot(document.getElementById("root")).render(
   <>
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<App />} />
-        <Route path="login" element={<LoginPage />} />
+    <StrictMode>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<App />} />
+          <Route path="login" element={<LoginPage />} />
 
-        <Route path="to-do" element={<ToDoApp />} />
+          <Route path="to-do" element={<ToDoApp />} />
 
-        <Route path="lessons">
-          <Route index element={<NavigationUi />} />
-          <Route path=":lessonId" element={<LessonPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          <Route path="lessons">
+            <Route index element={<NavigationUi />} />
+            <Route path=":lessonId" element={<LessonPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </StrictMode>
   </>
 );

@@ -14,8 +14,8 @@ const ShowCount = ({ count }) => {
 
   } else {
     function countOutRange(curCount) {
-        if (curCount < 10) return (<em>&lt; 10</em>);
-        else return (<i>26+</i>)
+      if (curCount < 10) return (<em>&lt; 10</em>);
+      else return (<i>26+</i>);
     }
     return (
       <b className=""> count is {countOutRange(count)}, you are out of other dependses </b>
@@ -24,13 +24,13 @@ const ShowCount = ({ count }) => {
 };
 
 export default memo(ShowCount, (oldProps, newProps) => {
-    if (newProps.count < 11 || newProps.count > 26) {
-        console.log('React сравнил oldProps, newProps (return true): ', oldProps, newProps)
+  if (newProps.count < 11 || newProps.count > 26) {
+    console.log('React сравнил oldProps, newProps (return true): ', oldProps, newProps);
         
-        return true;
-    } else {
-        console.log('React сравнил oldProps, newProps (return false): ', oldProps, newProps)
+    return true;
+  } else {
+    console.log('React сравнил oldProps, newProps (return false): ', oldProps, newProps);
         
-        return false;
-    }
+    return false;
+  }
 });

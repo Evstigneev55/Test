@@ -2,29 +2,19 @@ import { useEffect, useState } from 'react';
 
 import './index.css';
 
-// Массив для иницилизации Массива задач (tasks[]), если есть записи в localStorage
-let initArrTasks = [];
+function initTasks() {
+  const savedTasksStr = localStorage.getItem('arrTasks');
+  if (!savedTasksStr) return [];
+  try {
+    return JSON.parse(savedTasksStr);
+  } catch (e) {
+    localStorage.removeItem('arrTasks');
+    return [];
+  }
+}
 
 const ToDoApp = () => {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    //? Заменить условия ниже на if(localStorage.getItem)
-
-    if (
-      localStorage.getItem('arrTasks') !== null &&
-      localStorage.getItem('arrTasks') !== '' &&
-      localStorage.getItem('arrTasks') !== undefined
-    ) {
-      const arrTasks = localStorage.getItem('arrTasks');
-      initArrTasks = arrTasks.split(',');
-      console.log('Eсть записи в localStorage');
-      setTasks(initArrTasks);
-    } else {
-      localStorage.setItem('arrTasks', '');
-      console.log('Нет записей в localStorage');
-    }
-  }, []);
+  const [tasks, setTasks] = useState(initTasks());
 
   // Не удаляет, а перезаписывает массив на новый, уже без записи под индексом
   function delTask(index) {
@@ -48,9 +38,10 @@ const ToDoApp = () => {
     if (event.key === 'Enter') addTask();
   }
 
+
   // При изменении задач, обновляем и запись в localStorage
   useEffect(() => {
-    localStorage.setItem('arrTasks', tasks);
+    localStorage.setItem('arrTasks', JSON.stringify(tasks));
   }, [tasks]);
 
   return (
