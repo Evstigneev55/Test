@@ -1,4 +1,4 @@
-let NameAge = 18;
+const NameAge = 18;
 
 const Lesson_8 = () => {
   const ExampName = "Alex";

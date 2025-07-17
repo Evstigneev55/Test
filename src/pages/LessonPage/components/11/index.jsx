@@ -1,6 +1,6 @@
 import UserMeetComponent from './UserName';
 
-let USERS = [
+const USERS = [
   {id: 1, name: 'Kon', surname: 'Kurosaki', age: 18},
   {id: 2, name: 'Lina', surname: 'Maiden', age: 25},
   {id: 3, name: 'io', surname: 'Ubutu', age: 210},

@@ -37,7 +37,7 @@ const ToDoApp = () => {
 
   function delTask(event) {
     if (confirm("Are you sure?")) {
-      let taskId = event.target.value;
+      const taskId = event.target.value;
       localStorage.removeItem(taskId);
 
       if (taskId === lastIndex) {
