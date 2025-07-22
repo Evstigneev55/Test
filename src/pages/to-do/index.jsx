@@ -134,7 +134,7 @@ const ToDoApp = () => {
 				{' '}
 				Not Comleted
 				{notDoneTasks.map((task, index) => (
-					<li key={index}>
+					<li key={task.id}>
 						<input
 							type="checkbox"
 							checked={task.isDone}
@@ -166,7 +166,7 @@ const ToDoApp = () => {
 			<ol className="to-do-App__ol">
 				Выполненные
 				{doneTasks.map((task, index) => (
-					<li key={index}>
+					<li key={task.id}>
 						<input
 							type="checkbox"
 							checked={task.isDone}
