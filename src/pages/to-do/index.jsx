@@ -15,23 +15,22 @@ const ToDoApp = () => {
 	const [newTask, setNewTask] = useState('');
 	const notDoneTasks = tasks.filter((t) => t.isDone === false);
 	const doneTasks = tasks.filter((t) => t.isDone === true);
-	const theLastIncrementId = tasks
-		.map((task) => task.id)
-		.sort()
-		.at(-1);
+	const theLastIncrementId =
+		tasks.length === 0
+			? 0
+			: tasks
+					.map((task) => task.id)
+					.sort()
+					.at(-1);
 
 	console.log('Весь компонент ToDoApp перерисовался');
 
 	// Не удаляет, а перезаписывает массив на новый, уже без записи под индексом
 	function delTask(index) {
 		const newArrTasks = tasks.filter((_, i) => i !== index);
+		console.log(index, newArrTasks);
 		setTasks(() => newArrTasks);
 	}
-
-	//! useRef() использовать
-	//! Попробуй useReducer
-	// function reducer(state, action) {
-	// }
 
 	//
 	function addTaskWithReact() {
@@ -135,7 +134,7 @@ const ToDoApp = () => {
 				{' '}
 				Not Comleted
 				{notDoneTasks.map((task, index) => (
-					<li key={task.id}>
+					<li key={index}>
 						<input
 							type="checkbox"
 							checked={task.isDone}
@@ -143,13 +142,13 @@ const ToDoApp = () => {
 								setTasks((tasks) => {
 									//! обращаюсь к объекту по его индексу в Массиве
 									const newTasksArr = [...tasks];
-									newTasksArr[index].isDone = e.target.checked;
+									newTasksArr.find((t) => t.id === task.id).isDone = e.target.checked;
 									return newTasksArr;
 								});
 							}}
 						/>
 						<span>{task.text}</span>
-						<button className="del-btn" onClick={() => delTask(task.id)}>
+						<button className="del-btn" onClick={() => delTask(index)}>
 							delete
 						</button>
 						<button type="button" onClick={() => onClickUpBtn(index)}>
@@ -167,7 +166,7 @@ const ToDoApp = () => {
 			<ol className="to-do-App__ol">
 				Выполненные
 				{doneTasks.map((task, index) => (
-					<li key={task.id}>
+					<li key={index}>
 						<input
 							type="checkbox"
 							checked={task.isDone}
@@ -175,13 +174,13 @@ const ToDoApp = () => {
 								setTasks((tasks) => {
 									//! обращаюсь к объекту по его индексу в Массиве
 									const newTasksArr = [...tasks];
-									newTasksArr[index].isDone = e.target.checked;
+									newTasksArr.find((t) => t.id === task.id).isDone = e.target.checked;
 									return newTasksArr;
 								});
 							}}
 						/>
 						<span>{task.text}</span>
-						<button className="del-btn" onClick={() => delTask(task.id)}>
+						<button className="del-btn" onClick={() => delTask(index)}>
 							delete
 						</button>
 						{/* <button type="button" onClick={() => onClickUpBtn(task.id)}>
