@@ -28,6 +28,7 @@ export default defineConfig([
       'for-direction': 'error',
       'no-duplicate-imports': "warn",
       'prefer-const': 'warn',
+      // 'no-console': 'error'
     },
   },
 ])

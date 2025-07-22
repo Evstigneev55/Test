@@ -16,6 +16,7 @@ const ToDoApp = () => {
     const newTaskInputElement = document.getElementById("newTaskInput");
     const newTaskText = newTaskInputElement.value.trim();
 
+    
     lastIndex++;
 
     localStorage.setItem(lastIndex, newTaskText);

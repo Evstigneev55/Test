@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import "./App.css";
+
+// import "./App.css";
 
 function App() {
   const [count, setCount] = useState(20); // сам счётчик

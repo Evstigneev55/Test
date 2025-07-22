@@ -1,3 +1,11 @@
+//TODO start
+// - Read docs React fully
+// - do str: 25-26
+// - вынести все задачи в отдельную функцию, чтобы реакт перерисовывал не весь компонент to-do, а только задачи:
+//export function...
+// - Fixme, str: 21
+//TODO end
+
 import { useEffect, useState } from 'react';
 
 import './index.css';
@@ -5,13 +13,19 @@ import './index.css';
 const ToDoApp = () => {
 	const [tasks, setTasks] = useState(initTasks());
 	const [newTask, setNewTask] = useState('');
+	const notDoneTasks = tasks.filter((t) => t.isDone === false);
+	const doneTasks = tasks.filter((t) => t.isDone === true);
+	const theLastIncrementId = tasks
+		.map((task) => task.id)
+		.sort()
+		.at(-1);
 
 	console.log('Весь компонент ToDoApp перерисовался');
-	
+
 	// Не удаляет, а перезаписывает массив на новый, уже без записи под индексом
 	function delTask(index) {
 		const newArrTasks = tasks.filter((_, i) => i !== index);
-		setTasks(newArrTasks);
+		setTasks(() => newArrTasks);
 	}
 
 	//! useRef() использовать
@@ -19,10 +33,15 @@ const ToDoApp = () => {
 	// function reducer(state, action) {
 	// }
 
-	// Обновляем state tasks и newTask
+	//
 	function addTaskWithReact() {
 		if (newTask !== '') {
-			setTasks((tasks) => [...tasks, newTask]);
+			setTasks((tasks) => {
+				const newTasksArr = [...tasks];
+				newTasksArr.push({ id: theLastIncrementId + 1, text: newTask, isDone: false });
+
+				return newTasksArr;
+			});
 
 			setNewTask((newTask) => {
 				newTask = '';
@@ -33,17 +52,45 @@ const ToDoApp = () => {
 
 	function addTaskForm(event) {
 		if (event) event.preventDefault();
-		console.log(event);
 
 		const newTaskInputElement = document.getElementById('newTaskForm');
 		const newTaskText = newTaskInputElement.value.trim();
 
 		if (newTaskText !== '') {
-			setTasks((tasks) => [...tasks, newTaskText]);
+			setTasks((tasks) => {
+				const newTasksArr = [...tasks];
+				newTasksArr.push({ id: theLastIncrementId + 1, text: newTaskText, isDone: false });
+
+				return newTasksArr;
+			});
 			newTaskInputElement.value = '';
 		} else alert('Write your task in input area');
 	}
 
+	function onClickUpBtn(index) {
+		if (index < 1) return;
+
+		setTasks((t) => {
+			const updatedTasks = [...t];
+			[updatedTasks[index - 1], updatedTasks[index]] = [
+				updatedTasks[index],
+				updatedTasks[index - 1],
+			];
+			return updatedTasks;
+		});
+	}
+
+	function retarded(index) {
+		if (index === tasks.length - 1) return;
+		setTasks((t) => {
+			const updatedTasks = [...t];
+			[updatedTasks[index], updatedTasks[index + 1]] = [
+				updatedTasks[index + 1],
+				updatedTasks[index],
+			];
+			return updatedTasks;
+		});
+	}
 	// При изменении задач, обновляем и запись в localStorage
 	useEffect(() => {
 		localStorage.setItem('arrTasks', JSON.stringify(tasks));
@@ -83,24 +130,75 @@ const ToDoApp = () => {
 			</div>
 			{/* Через форму END */}
 
+			{/* Вывод НЕвыполненных задач START */}
 			<ol className="to-do-App__ol">
-				{tasks.map((task, index) => (
-					<li key={index}>
-						<span>{task}</span>
-						<button className="del-btn" onClick={() => delTask(index)}>
+				{' '}
+				Not Comleted
+				{notDoneTasks.map((task, index) => (
+					<li key={task.id}>
+						<input
+							type="checkbox"
+							checked={task.isDone}
+							onChange={(e) => {
+								setTasks((tasks) => {
+									//! обращаюсь к объекту по его индексу в Массиве
+									const newTasksArr = [...tasks];
+									newTasksArr[index].isDone = e.target.checked;
+									return newTasksArr;
+								});
+							}}
+						/>
+						<span>{task.text}</span>
+						<button className="del-btn" onClick={() => delTask(task.id)}>
 							delete
+						</button>
+						<button type="button" onClick={() => onClickUpBtn(index)}>
+							up
+						</button>
+						<button type="button" onClick={() => retarded(index)}>
+							down
 						</button>
 					</li>
 				))}
 			</ol>
+			{/* Вывод НЕвыполненных задач END */}
+
+			{/* Вывод Выполненных задач START */}
+			<ol className="to-do-App__ol">
+				Выполненные
+				{doneTasks.map((task, index) => (
+					<li key={task.id}>
+						<input
+							type="checkbox"
+							checked={task.isDone}
+							onChange={(e) => {
+								setTasks((tasks) => {
+									//! обращаюсь к объекту по его индексу в Массиве
+									const newTasksArr = [...tasks];
+									newTasksArr[index].isDone = e.target.checked;
+									return newTasksArr;
+								});
+							}}
+						/>
+						<span>{task.text}</span>
+						<button className="del-btn" onClick={() => delTask(task.id)}>
+							delete
+						</button>
+						{/* <button type="button" onClick={() => onClickUpBtn(task.id)}>
+							up
+						</button>
+						<button type="button" onClick={() => retarded(task.id)}>
+						даун?
+						</button> */}
+					</li>
+				))}
+			</ol>
+			{/* Вывод Выполненных задач END */}
 		</div>
 	);
 };
 
 export default ToDoApp;
-
-//TODO: вынести все задачи в отдельную функцию, чтобы реакт перерисовывал не весь компонент to-do, а только задачи
-// function...
 
 function initTasks() {
 	const savedTasksStr = localStorage.getItem('arrTasks');
@@ -113,3 +211,9 @@ function initTasks() {
 		return [];
 	}
 }
+
+const exampInitTasks = [
+	{ id: 0, text: 'lyaLyaLya', isDone: false },
+	{ id: 1, text: 'OpLa', isDone: false },
+	{ id: 2, text: 'L?', isDone: true },
+];
