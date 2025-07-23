@@ -10,6 +10,10 @@ import { useEffect, useState } from 'react';
 
 import './index.css';
 
+import NotDone from './components/NotDone.jsx';
+import Done from './components/Done.jsx';
+import NothingIntersting from './components/secret.jsx';
+
 const ToDoApp = () => {
 	const [tasks, setTasks] = useState(initTasks());
 	const [newTask, setNewTask] = useState('');
@@ -90,6 +94,15 @@ const ToDoApp = () => {
 			return updatedTasks;
 		});
 	}
+
+	function checkboxHandler(e, task) {
+		setTasks((tasks) => {
+			const newTasksArr = [...tasks];
+			newTasksArr.find((t) => t.id === task.id).isDone = e.target.checked;
+			return newTasksArr;
+		});
+	}
+
 	// При изменении задач, обновляем и запись в localStorage
 	useEffect(() => {
 		localStorage.setItem('arrTasks', JSON.stringify(tasks));
@@ -97,7 +110,9 @@ const ToDoApp = () => {
 
 	return (
 		<div className="to-do-App">
-			<h1 className="to-do-App__h1">to-do</h1>
+			<NothingIntersting />
+
+			<h1 className="to-do-App__h1">to-do App</h1>
 
 			{/* controllable input on React START */}
 			<div className="to-do-App__Area-Input">
@@ -131,66 +146,22 @@ const ToDoApp = () => {
 
 			{/* Вывод НЕвыполненных задач START */}
 			<ol className="to-do-App__ol">
-				{' '}
-				Not Comleted
-				{notDoneTasks.map((task, index) => (
-					<li key={task.id}>
-						<input
-							type="checkbox"
-							checked={task.isDone}
-							onChange={(e) => {
-								setTasks((tasks) => {
-									//! обращаюсь к объекту по его индексу в Массиве
-									const newTasksArr = [...tasks];
-									newTasksArr.find((t) => t.id === task.id).isDone = e.target.checked;
-									return newTasksArr;
-								});
-							}}
-						/>
-						<span>{task.text}</span>
-						<button className="del-btn" onClick={() => delTask(index)}>
-							delete
-						</button>
-						<button type="button" onClick={() => onClickUpBtn(index)}>
-							up
-						</button>
-						<button type="button" onClick={() => retarded(index)}>
-							down
-						</button>
-					</li>
-				))}
+				{notDoneTasks.length > 0 && <h3> Not Completed</h3>}
+				<NotDone
+					notDoneTasks={notDoneTasks}
+					checkboxHandler={checkboxHandler}
+					delTask={delTask}
+					onClickUpBtn={onClickUpBtn}
+					onClickDownBtn={retarded}
+				/>
 			</ol>
 			{/* Вывод НЕвыполненных задач END */}
 
 			{/* Вывод Выполненных задач START */}
 			<ol className="to-do-App__ol">
-				Выполненные
-				{doneTasks.map((task, index) => (
-					<li key={task.id}>
-						<input
-							type="checkbox"
-							checked={task.isDone}
-							onChange={(e) => {
-								setTasks((tasks) => {
-									//! обращаюсь к объекту по его индексу в Массиве
-									const newTasksArr = [...tasks];
-									newTasksArr.find((t) => t.id === task.id).isDone = e.target.checked;
-									return newTasksArr;
-								});
-							}}
-						/>
-						<span>{task.text}</span>
-						<button className="del-btn" onClick={() => delTask(index)}>
-							delete
-						</button>
-						{/* <button type="button" onClick={() => onClickUpBtn(task.id)}>
-							up
-						</button>
-						<button type="button" onClick={() => retarded(task.id)}>
-						даун?
-						</button> */}
-					</li>
-				))}
+				{doneTasks.length > 0 && <h3>Completed</h3>}
+
+				<Done doneTasks={doneTasks} checkboxHandler={checkboxHandler} delTask={delTask} />
 			</ol>
 			{/* Вывод Выполненных задач END */}
 		</div>
@@ -211,6 +182,7 @@ function initTasks() {
 	}
 }
 
+// eslint-disable-next-line no-unused-vars
 const exampInitTasks = [
 	{ id: 0, text: 'lyaLyaLya', isDone: false },
 	{ id: 1, text: 'OpLa', isDone: false },
