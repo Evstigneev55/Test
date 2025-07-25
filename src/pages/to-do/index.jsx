@@ -5,9 +5,10 @@
 //TODO end
 
 //! tasks:
-//- .prettierc
+//- .prettierc (120 length)
 //- useReduce
 //- refactor with TS
+//- make Route for tests
 
 import './index.css';
 

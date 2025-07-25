@@ -1,6 +1,42 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 
+function reducerTasks(t, action) {
+	switch (action.type) {
+		case 'del_task':
+			const newArrTasks = t.filter((_, i) => i !== action.index);
+			return newArrTasks;
+
+		case 'add_task_with_react':
+			return [...t, action.newTaskObj];
+
+		case 'add_task_with_form':
+			return [...t, action.newTaskObj];
+
+		case 'on_Click_Up_Btn':
+			const updatedTasksUp = [...t];
+			[updatedTasksUp[action.index - 1], updatedTasksUp[action.index]] = [
+				updatedTasksUp[action.index],
+				updatedTasksUp[action.index - 1],
+			];
+			return updatedTasksUp;
+
+		case 'on_Click_Down_Btn':
+			const updatedTasksDown = [...t];
+			[updatedTasksDown[action.index], updatedTasksDown[action.index + 1]] = [
+				updatedTasksDown[action.index + 1],
+				updatedTasksDown[action.index],
+			];
+			return updatedTasksDown;
+
+		case 'click_checkbox':
+			// TRY: const {e, task} = action;
+			const newTasksArr = [...t];
+			newTasksArr.find((ta) => ta.id === action.task.id).isDone = action.e.target.checked;
+			return newTasksArr;
+	}
+}
 const useToDo = () => {
+    const [TASKS, dispatch] = useReducer(reducerTasks, initTasks())
 	const [tasks, setTasks] = useState(initTasks());
 	const [newTask, setNewTask] = useState('');
 	const notDoneTasks = tasks.filter((t) => t.isDone === false);
@@ -17,7 +53,7 @@ const useToDo = () => {
 
 	// Не удаляет, а перезаписывает массив на новый, уже без записи под индексом
 	function delTask(index) {
-		const newArrTasks = tasks.filter((_, i) => i !== index);
+        const newArrTasks = tasks.filter((_, i) => i !== index)
 		setTasks(() => newArrTasks);
 	}
 
