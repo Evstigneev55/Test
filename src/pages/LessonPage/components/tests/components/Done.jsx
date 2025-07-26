@@ -20,7 +20,10 @@ function Done({ doneTasks, dispatchDoneT, dispatchNotDoneT }) {
 						}}
 					/>
 					<span>{task.text}</span>
-					<button className="del-btn" onClick={() => dispatchDoneT({ type: 'del_task', TaskId: task.id })}>
+					<button
+						className="del-btn"
+						onClick={() => dispatchDoneT({ type: 'del_task', TaskId: task.id })}
+					>
 						delete
 					</button>
 				</li>

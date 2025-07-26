@@ -40,6 +40,15 @@ function NavigationUi() {
 						<i>DocReact_1</i>
 					</Link>
 				</li>
+				<li>
+					<Link to="test_1">
+						<p>Test_1</p>
+					</Link>
+				</li>
+
+				<Link to="test_2">
+					<p>Test_2</p>
+				</Link>
 			</ul>
 		</nav>
 	);
