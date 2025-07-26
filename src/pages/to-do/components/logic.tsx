@@ -1,4 +1,5 @@
-import React, { useReducer, useEffect, useRef } from 'react';
+import React, { useReducer, useEffect } from 'react';
+import { nanoid } from 'nanoid';
 
 // ЧЕРНОВИК START
 // type OnlyCasesReducerTasks<T> = {
@@ -14,14 +15,14 @@ import React, { useReducer, useEffect, useRef } from 'react';
 // }
 // ЧЕРНОВИК END
 
-interface ITask {
-	id: number;
+export interface ITask {
+	id: string;
 	text: string;
 	isDone: boolean;
 }
 
-type ActionsPayload =
-	| { type: 'del_task'; TaskId: number }
+export type ActionsPayload =
+	| { type: 'del_task'; TaskId: string }
 	| { type: 'add_task'; newTaskObj: ITask }
 	| { type: 'on_Click_Up_Btn'; index: number }
 	| { type: 'on_Click_Down_Btn'; index: number };
@@ -60,7 +61,6 @@ function reducerTasks(t: ITask[], action: ActionsPayload): ITask[] {
 const useToDoLogic = () => {
 	const [doneTasks, dispatchDoneT] = useReducer(reducerTasks, initTasksFrom('arrTasksDone'));
 	const [notDoneTasks, dispatchNotDoneT] = useReducer(reducerTasks, initTasksFrom('arrTasksNotDone'));
-	const refLastId = useRef<number>(initLatestId([...doneTasks, ...notDoneTasks]));
 
 	//! выделил решения, что думаю не очень удачные
 	//! React.FormEvent<HTMLFormElement>
@@ -80,13 +80,11 @@ const useToDoLogic = () => {
 			dispatchNotDoneT({
 				type: 'add_task',
 				newTaskObj: {
-					id: refLastId.current++,
+					id: nanoid(),
 					text: newTaskText,
 					isDone: false,
 				},
 			});
-
-			localStorage.setItem('last_id', refLastId.current.toString());
 
 			newTaskInputElement.value = '';
 		} else alert('Write your task in input area');
@@ -97,9 +95,8 @@ const useToDoLogic = () => {
 		if (newTaskState) {
 			dispatchNotDoneT({
 				type: 'add_task',
-				newTaskObj: { id: refLastId.current++, text: newTaskState, isDone: false },
+				newTaskObj: { id: nanoid(), text: newTaskState, isDone: false },
 			});
-			localStorage.setItem('last_id', refLastId.current.toString());
 
 			setNewTaskState('');
 		} else alert('Write your task in input area');
@@ -126,25 +123,6 @@ const useToDoLogic = () => {
 
 export default useToDoLogic;
 
-function initLatestId(arrT: ITask[]) {
-	const storedLastId = localStorage.getItem('last_id');
-	if (!storedLastId) {
-		const lastId =
-			arrT
-				.map((task) => task.id)
-				.sort()
-				?.at(-1) ?? 0;
-		localStorage.setItem('last_id', lastId.toString());
-		return lastId;
-	}
-	try {
-		return Number(JSON.parse(storedLastId));
-	} catch (e) {
-		console.log('Cant parse to Num: ' + storedLastId, '\n by Error: ' + e);
-		localStorage.removeItem('last_id');
-		return 500;
-	}
-}
 // добавить возможность получать theLatestId (думаю с дженериком можно как-то)
 function initTasksFrom(storageName: 'arrTasksDone' | 'arrTasksNotDone') {
 	const savedTasksStr = localStorage.getItem(storageName);

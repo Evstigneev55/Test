@@ -1,4 +1,14 @@
-function NotDone({ dispatchNotDoneT, notDoneTasks, dispatchDoneT }) {
+import type { ActionsPayload, ITask } from './logic';
+
+function NotDone({
+	dispatchNotDoneT,
+	notDoneTasks,
+	dispatchDoneT,
+}: {
+	dispatchNotDoneT: React.ActionDispatch<[action: ActionsPayload]>;
+	dispatchDoneT: React.ActionDispatch<[action: ActionsPayload]>;
+	notDoneTasks: ITask[];
+}) {
 	return (
 		<ol className="to-do-App__ol">
 			{notDoneTasks.length > 0 && <h3> Not Completed</h3>}
@@ -8,7 +18,7 @@ function NotDone({ dispatchNotDoneT, notDoneTasks, dispatchDoneT }) {
 					<input
 						type="checkbox"
 						checked={task.isDone}
-						onChange={(e) => {
+						onChange={() => {
 							dispatchNotDoneT({ type: 'del_task', TaskId: task.id });
 							dispatchDoneT({ type: 'add_task', newTaskObj: { ...task, isDone: true } });
 						}}
