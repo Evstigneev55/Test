@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect } from 'react';
+import React, { useReducer, useEffect, useRef } from 'react';
 
 interface ITask {
 	id: number;
@@ -10,12 +10,14 @@ interface ITask {
 // 	[K in keyof T]: T[K] extends string ? K : never
 // }[keyof T]
 
-type PossibleCasesReducer =
-	| 'del_task'
-	| 'add_task'
-	| 'on_Click_Up_Btn'
-	| 'on_Click_Down_Btn'
-	| 'click_checkbox';
+type PossibleCasesReducer = 'del_task' | 'add_task' | 'on_Click_Up_Btn' | 'on_Click_Down_Btn';
+
+interface PossibleActionsReducer {
+	type: PossibleCasesReducer;
+	newTaskObj: ITask;
+	TaskId: number;
+	index: number;
+}
 
 function reducerTasks(t: ITask[], action: any): ITask[] {
 	switch (action.type) {
@@ -50,35 +52,43 @@ const useTestDo = () => {
 		reducerTasks,
 		initTasksFrom('arrTasksNotDone')
 	);
+	const refLastId = useRef<number>(initLatestId([...doneTasks, ...notDoneTasks]));
 
-	const theLastIncrementIdFromAll = () => {
-		const arrT = [...doneTasks, ...notDoneTasks];
-		if (arrT.length === 0) return 0;
-		return arrT
-			.map((task) => task.id)
-			.sort()
-			.at(-1);
-	};
-
+	// console.log(typeof(refLastId), "mrmrmrmr", typeof(refLastId.current))
+	
 	const addTaskForm = (event) => {
 		if (event) event.preventDefault();
-
+		
 		const newTaskInputElement = document.getElementById('newTaskForm');
 		const newTaskText = newTaskInputElement.value.trim();
-
+		
 		if (newTaskText) {
 			dispatchNotDoneT({
 				type: 'add_task',
 				newTaskObj: {
-					id: theLastIncrementIdFromAll() + 1,
+					id: refLastId.current++,
 					text: newTaskText,
 					isDone: false,
 				},
 			});
 
+			localStorage.setItem('last_id', refLastId.current.toString());
+
 			newTaskInputElement.value = '';
 		} else alert('Write your task in input area');
 	};
+
+	function addTaskWithReact(newTaskState: string, setNewTaskState: React.Dispatch<React.SetStateAction<string>>) {
+		if (newTaskState) {
+			dispatchNotDoneT({
+				type: 'add_task',
+				newTaskObj: { id: refLastId.current++, text: newTaskState, isDone: false },
+			});
+			localStorage.setItem('last_id', refLastId.current.toString())
+
+			setNewTaskState('');
+		} else alert('Write your task in input area'); //FIXME: сделать не алерт, а сообщением о ошибке(html в помощь)
+	}
 
 	// При изменении задач, обновляем запись в localStorage
 	useEffect(() => {
@@ -94,13 +104,33 @@ const useTestDo = () => {
 		dispatchDoneT,
 		notDoneTasks,
 		dispatchNotDoneT,
-		theLastIncrementIdFromAll,
+		addTaskWithReact,
 		addTaskForm,
 	};
 };
 
 export default useTestDo;
 
+function initLatestId(arrT: ITask[]) {
+	const storedLastId = localStorage.getItem('last_id');
+	if (!storedLastId) {
+		const lastId =
+			arrT
+				.map((task) => task.id)
+				.sort()
+				?.at(-1) ?? 0;
+		localStorage.setItem('last_id', lastId.toString());
+		return lastId;
+	}
+	try {
+		return Number(JSON.parse(storedLastId));
+	} catch (e) {
+		console.log('Cant parse to Num: ' + storedLastId, '\n by Error: ' + e);
+		localStorage.removeItem('last_id');
+		return 500;
+	}
+}
+// добавить возможность получать theLatestId (думаю с дженериком можно как-то)
 function initTasksFrom(storageName: 'arrTasksDone' | 'arrTasksNotDone') {
 	const savedTasksStr = localStorage.getItem(storageName);
 	if (!savedTasksStr) return [];

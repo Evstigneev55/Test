@@ -11,6 +11,7 @@ const Test_2 = () => {
 		dispatchNotDoneT,
 		theLastIncrementIdFromAll,
 		addTaskForm,
+		addTaskWithReact,
 	} = useTestDo();
 
 	return (
@@ -18,9 +19,7 @@ const Test_2 = () => {
 			<h1 className="to-do-App__h1">to-do App</h1>
 
 			<ControllableInput
-				theLastIncrementIdFromAll={theLastIncrementIdFromAll}
-				dispatchNotDoneT={dispatchNotDoneT}
-				dispatchDoneT={dispatchDoneT}
+				addTaskWithReact={addTaskWithReact}
 			/>
 
 			{/* Через форму START */}
