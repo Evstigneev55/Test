@@ -6,10 +6,10 @@ import BtnCount from "./components/btnCount.jsx";
 const App = () => {
   const [count, setCount] = useState(0);
 
-//   const currentScoreMiniCountPlus1 = increaseCount();
-//   currentScoreMiniCountPlus1();
-//   currentScoreMiniCountPlus1();
-//   currentScoreMiniCountPlus1();
+  //   const currentScoreMiniCountPlus1 = increaseCount();
+  //   currentScoreMiniCountPlus1();
+  //   currentScoreMiniCountPlus1();
+  //   currentScoreMiniCountPlus1();
 
   function onClickHandler() {
     setCount((count) => {
@@ -21,11 +21,11 @@ const App = () => {
 
   return (
     <>
-        <ShowCount count={count}/>
+      <ShowCount count={count}/>
         
-        <div>
-            <BtnCount onClickHandler={onClickHandler}/>
-        </div>
+      <div>
+        <BtnCount onClickHandler={onClickHandler}/>
+      </div>
     </>
   );
 };

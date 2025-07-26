@@ -7,16 +7,16 @@
 
 
 const Lesson_12 = () => {
-    const onChangeInputElement = (event) => {
-        console.log('On Change (Input) . value: ', event.target.value)
-    }
-    const onClickButtonElement = (event) => {
-        alert(`ты посмел нажать на ${event.target}`)
-    }
-    const onSubmitFormElement = (event) => {
-        event.preventDefault();
-        console.log('khe khe, что-то не так?)', event)
-    }
+  const onChangeInputElement = (event) => {
+    console.log('On Change (Input) . value: ', event.target.value);
+  };
+  const onClickButtonElement = (event) => {
+    alert(`ты посмел нажать на ${event.target}`);
+  };
+  const onSubmitFormElement = (event) => {
+    event.preventDefault();
+    console.log('khe khe, что-то не так?)', event);
+  };
   return (
     <div>
       <form onSubmit={onSubmitFormElement}>

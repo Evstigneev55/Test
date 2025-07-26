@@ -1,86 +1,47 @@
-import { useEffect, useState } from 'react';
+//TODO start
+// - Read docs React fully
+// - вынести все задачи в отдельную функцию, чтобы реакт перерисовывал не весь компонент to-do, а только задачи:
+//export function...
+//TODO end
+
+//! tasks:
+//- .prettierc (120 length)
 
 import './index.css';
 
-// Массив для иницилизации Массива задач (tasks[]), если есть записи в localStorage
-let initArrTasks = [];
+import NothingIntersting from './components/secret.jsx';
+import Done from './components/Done.jsx';
+import NotDone from './components/NotDone.jsx';
+import ControllableInput from './components/ControllableInput.jsx';
+
+import useToDoLogic from './components/logic.js';
 
 const ToDoApp = () => {
-  const [tasks, setTasks] = useState([]);
+	const { doneTasks, dispatchDoneT, notDoneTasks, dispatchNotDoneT, addTaskForm, addTaskWithReact } = useToDoLogic();
 
-  useEffect(() => {
-    //? Заменить условия ниже на if(localStorage.getItem)
+	return (
+		<div className="to-do-App">
+			<NothingIntersting />
+			<h1 className="to-do-App__h1">to-do App</h1>
 
-    if (
-      localStorage.getItem('arrTasks') !== null &&
-      localStorage.getItem('arrTasks') !== '' &&
-      localStorage.getItem('arrTasks') !== undefined
-    ) {
-      const arrTasks = localStorage.getItem('arrTasks');
-      initArrTasks = arrTasks.split(',');
-      console.log('Eсть записи в localStorage');
-      setTasks(initArrTasks);
-    } else {
-      localStorage.setItem('arrTasks', '');
-      console.log('Нет записей в localStorage');
-    }
-  }, []);
+			<ControllableInput addTaskWithReact={addTaskWithReact} />
 
-  // Не удаляет, а перезаписывает массив на новый, уже без записи под индексом
-  function delTask(index) {
-    const newArrTasks = tasks.filter((_, i) => i !== index);
-    setTasks(newArrTasks);
-  }
+			{/* Через форму START */}
+			<div id="with_form_tag" className="to-do-App__Area-Input">
+				<form onSubmit={addTaskForm}>
+					<input id="newTaskForm" type="text" placeholder="Form input" />
+					<button type="submit" className="to-do-App__Add-btn">
+						add
+					</button>
+				</form>
+			</div>
+			{/* Через форму END */}
 
-  // Находит нужный input элемент и добает текст в массив задач
-  function addTask() {
-    const newTaskInputElement = document.getElementById('newTask');
-    const newTaskText = newTaskInputElement.value.trim();
+			<NotDone dispatchNotDoneT={dispatchNotDoneT} notDoneTasks={notDoneTasks} dispatchDoneT={dispatchDoneT} />
 
-    if (newTaskText !== '') {
-      setTasks((tasks) => [...tasks, newTaskText]);
-      newTaskInputElement.value = '';
-    } else alert('Write your task in input area');
-  }
-
-  // Обработчик нажатия на Enter в поле ввода input
-  function addTaskOnKeyDown(event) {
-    if (event.key === 'Enter') addTask();
-  }
-
-  // При изменении задач, обновляем и запись в localStorage
-  useEffect(() => {
-    localStorage.setItem('arrTasks', tasks);
-  }, [tasks]);
-
-  return (
-    <div className="to-do-App">
-      <h1 className="to-do-App__h1">to-do</h1>
-
-      <div className="to-do-App__Area-Input">
-        <input
-          id="newTask"
-          type="text"
-          placeholder="Write your new task here!"
-          onKeyDown={addTaskOnKeyDown}
-        />
-        <button onClick={addTask} className="to-do-App__Add-btn">
-          add
-        </button>
-      </div>
-
-      <ol className="to-do-App__ol">
-        {tasks.map((task, index) => (
-          <li key={index}>
-            <span>{task}</span>
-            <button className="del-btn" onClick={() => delTask(index)}>
-              delete
-            </button>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
+			<Done doneTasks={doneTasks} dispatchDoneT={dispatchDoneT} dispatchNotDoneT={dispatchNotDoneT} />
+		</div>
+	);
 };
 
 export default ToDoApp;

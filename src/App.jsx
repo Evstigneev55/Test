@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
+
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(30); // сам счётчик
+  const [count, setCount] = useState(20); // сам счётчик
 
   const navigate = useNavigate();
 
@@ -28,8 +29,8 @@ function App() {
 
   // этот useEffect, чтобы не вызовать навигацию во время рендера компонента App
   useEffect(() => {
-    if (count === 0) navigate("/to-do");
-  }, [count]);
+    if (count === 0) navigate('/to-do');
+  }, [count, navigate]);
 
   return (
     <>

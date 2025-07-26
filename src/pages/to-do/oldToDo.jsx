@@ -16,6 +16,7 @@ const ToDoApp = () => {
     const newTaskInputElement = document.getElementById("newTaskInput");
     const newTaskText = newTaskInputElement.value.trim();
 
+    
     lastIndex++;
 
     localStorage.setItem(lastIndex, newTaskText);
@@ -37,7 +38,7 @@ const ToDoApp = () => {
 
   function delTask(event) {
     if (confirm("Are you sure?")) {
-      let taskId = event.target.value;
+      const taskId = event.target.value;
       localStorage.removeItem(taskId);
 
       if (taskId === lastIndex) {

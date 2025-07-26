@@ -11,7 +11,7 @@ import LessonPage from "./pages/LessonPage";
 import ToDoApp from "./pages/to-do";
 
 createRoot(document.getElementById("root")).render(
-  <>
+  <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route index element={<App />} />
@@ -21,9 +21,9 @@ createRoot(document.getElementById("root")).render(
 
         <Route path="lessons">
           <Route index element={<NavigationUi />} />
-          <Route path=":lessonId" element={<LessonPage />} />
+            <Route path=":lessonId" element={<LessonPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
-  </>
+  </StrictMode>
 );
