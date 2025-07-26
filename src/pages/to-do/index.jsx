@@ -100,11 +100,7 @@ const ToDoApp = () => {
 
 export default ToDoApp;
 
-// interface ITask {
-// 	id: number;
-// 	text: string;
-// 	isDone: boolean;
-// }
+
 
 // eslint-disable-next-line no-unused-vars
 const exampInitTasks = [

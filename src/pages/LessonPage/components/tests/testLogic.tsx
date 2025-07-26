@@ -1,15 +1,28 @@
 import { useReducer, useState, useEffect } from 'react';
 
-function reducerTasks(t, action) {
+interface ITask {
+	id: number;
+	text: string;
+	isDone: boolean;
+}
+
+// type OnlyCasesReducerTasks<T> = {
+// 	[K in keyof T]: T[K] extends string ? K : never
+// }[keyof T]
+
+type PossibleCasesReducer =
+	| 'del_task'
+	| 'add_task'
+	| 'on_Click_Up_Btn'
+	| 'on_Click_Down_Btn'
+	| 'click_checkbox';
+
+function reducerTasks(t: ITask[], action: any): ITask[] {
 	switch (action.type) {
 		case 'del_task':
-			const newArrTasks = t.filter((_, i) => i !== action.index);
-			return newArrTasks;
+			return t.filter((ta) => ta.id !== action.TaskId);
 
-		case 'add_task_with_react':
-			return [...t, action.newTaskObj];
-
-		case 'add_task_with_form':
+		case 'add_task':
 			return [...t, action.newTaskObj];
 
 		case 'on_Click_Up_Btn':
@@ -27,34 +40,6 @@ function reducerTasks(t, action) {
 				updatedTasksDown[action.index],
 			];
 			return updatedTasksDown;
-
-		case 'click_checkbox':
-			// TRY: const {e, task} = action;
-			const newTasksArr = [...t];
-			newTasksArr.find((ta) => ta.id === action.task.id).isDone = action.e.target.checked;
-			console.log(action);
-
-			// Если выполнили задачу, то добавь её в массив выполненных, иначе в массив не выполн.
-			if (action.e.target.checked)
-				action.dispatchDoneT({
-					type: 'add_task_with_react',
-					newTaskObj: {
-						id: action.theLastIncrementIdFromAll() + 1,
-						text: action.task.text,
-						isDone: action.e.target.checked,
-					},
-				});
-			else
-				action.dispatchNotDoneT({
-					type: 'add_task_with_react',
-					newTaskObj: {
-						id: action.theLastIncrementIdFromAll() + 1,
-						text: action.task.text,
-						isDone: action.e.target.checked,
-					},
-				});
-
-			return newTasksArr.filter((t) => t.id !== action.task.id);
 	}
 	throw Error('Unknown action: ' + action.type);
 }
@@ -65,7 +50,6 @@ const useTestDo = () => {
 		reducerTasks,
 		initTasksFrom('arrTasksNotDone')
 	);
-	const [newTask, setNewTask] = useState('');
 
 	const theLastIncrementIdFromAll = () => {
 		const arrT = [...doneTasks, ...notDoneTasks];
@@ -84,7 +68,7 @@ const useTestDo = () => {
 
 		if (newTaskText) {
 			dispatchNotDoneT({
-				type: 'add_task_with_form',
+				type: 'add_task',
 				newTaskObj: {
 					id: theLastIncrementIdFromAll() + 1,
 					text: newTaskText,
@@ -96,7 +80,7 @@ const useTestDo = () => {
 		} else alert('Write your task in input area');
 	};
 
-		// При изменении задач, обновляем запись в localStorage
+	// При изменении задач, обновляем запись в localStorage
 	useEffect(() => {
 		localStorage.setItem('arrTasksDone', JSON.stringify(doneTasks));
 	}, [doneTasks]);
@@ -110,8 +94,6 @@ const useTestDo = () => {
 		dispatchDoneT,
 		notDoneTasks,
 		dispatchNotDoneT,
-		newTask,
-		setNewTask,
 		theLastIncrementIdFromAll,
 		addTaskForm,
 	};
@@ -119,7 +101,7 @@ const useTestDo = () => {
 
 export default useTestDo;
 
-function initTasksFrom(storageName) {
+function initTasksFrom(storageName: 'arrTasksDone' | 'arrTasksNotDone') {
 	const savedTasksStr = localStorage.getItem(storageName);
 	if (!savedTasksStr) return [];
 	try {

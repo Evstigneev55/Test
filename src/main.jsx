@@ -12,7 +12,7 @@ import ToDoApp from "./pages/to-do";
 
 createRoot(document.getElementById("root")).render(
   <>
-  
+    <StrictMode>
       <BrowserRouter>
         <Routes>
           <Route index element={<App />} />
@@ -26,6 +26,6 @@ createRoot(document.getElementById("root")).render(
           </Route>
         </Routes>
       </BrowserRouter>
-    
+    </StrictMode>
   </>
 );

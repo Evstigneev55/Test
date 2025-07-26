@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-export default function ControllableInput({theLastIncrementIdFrom, dispatchNotDoneT, notDoneTasks}) {
+function ControllableInput({ theLastIncrementIdFromAll, dispatchNotDoneT, notDoneTasks }) {
 	const [newTask, setNewTask] = useState('');
 
 	function addTaskWithReact() {
 		if (newTask) {
 			dispatchNotDoneT({
-				type: 'add_task_with_react',
-				newTaskObj: { id: theLastIncrementIdFrom(notDoneTasks) + 1, text: newTask, isDone: false },
+				type: 'add_task',
+				newTaskObj: { id: theLastIncrementIdFromAll() + 1, text: newTask, isDone: false },
 			});
 
 			setNewTask('');
@@ -21,8 +21,8 @@ export default function ControllableInput({theLastIncrementIdFrom, dispatchNotDo
 				type="text"
 				placeholder="controllable React's input"
 				value={newTask}
-				onChange={(event) => {
-					setNewTask(event.target.value);
+				onChange={(e) => {
+					setNewTask(e.target.value);
 				}}
 				autoFocus
 				spellCheck
@@ -33,3 +33,5 @@ export default function ControllableInput({theLastIncrementIdFrom, dispatchNotDo
 		</div>
 	);
 }
+
+export default ControllableInput;
