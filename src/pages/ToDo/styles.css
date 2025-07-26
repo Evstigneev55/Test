@@ -1,0 +1,51 @@
+.to-do-App {
+    text-align: center;
+}
+
+.to-do-App__h1 {
+    font-size: 4rem;
+}
+
+.to-do-App button {
+    font-size: 1.7rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.5 ease;    
+}
+
+.to-do-App__Add-btn {
+    background-color: rgb(1, 11, 97);
+}
+.to-do-App__Add-btn:hover {
+    transition: 0.5s;
+    background-color: rgb(0, 34, 128);
+}
+.to-do-App__Area-Input input{
+    font-size: 1.6rem;
+    padding: 10px;
+}
+
+.del-btn {
+    background-color: red;
+}
+
+.to-do-App__ol {
+    padding: 0;
+    list-style-type: none;
+}
+.to-do-App__ol li {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: rgba(67, 67, 67, 0.351);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+.to-do-App__ol li span {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
+}
