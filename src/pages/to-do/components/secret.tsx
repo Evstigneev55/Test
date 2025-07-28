@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 
 const NothingIntersting = () => {
-	const [secret, setSecret] = useState(false);
+	const [secret, toogleSecret] = useReducer((prevS) => !prevS, false);
 	return secret ? (
 		<>
 			<iframe
@@ -11,10 +11,10 @@ const NothingIntersting = () => {
 				allow="autoplay"
 				allowFullScreen
 			/>
-			<button onClick={() => setSecret(() => false)}>Yea, u got me</button>
+			<button onClick={toogleSecret}>Yea, u got me</button>
 		</>
 	) : (
-		<button onClick={() => setSecret(() => true)}>FREE 3D AI model!!!</button>
+		<button onClick={toogleSecret}>FREE 3D AI model!!!</button>
 	);
 };
 

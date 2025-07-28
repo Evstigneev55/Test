@@ -16,17 +16,14 @@ function NotDone({ dispatchNotDoneT, notDoneTasks, dispatchDoneT }) {
 
 					<span>{task.text}</span>
 
-					<button
-						className="del-btn"
-						onClick={() => dispatchNotDoneT({ type: 'del_task', TaskId: task.id })}
-					>
+					<button className="del-btn" onClick={() => dispatchNotDoneT({ type: 'del_task', TaskId: task.id })}>
 						delete
 					</button>
 					<button
 						type="button"
 						onClick={() => {
 							if (index < 1) return;
-							dispatchNotDoneT({ type: 'on_Click_Up_Btn', index: index });
+							dispatchNotDoneT({ type: 'on-click-up-btn', index: index });
 						}}
 					>
 						up
@@ -45,6 +42,5 @@ function NotDone({ dispatchNotDoneT, notDoneTasks, dispatchDoneT }) {
 		</ol>
 	);
 }
-
 
 export default NotDone;

@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import useToDoLogic from '../../../helpers/logic';
 
-function ControllableInput({ addTaskWithReact }) {
+function ControllableInput() {
+	const { addTaskWithReact } = useToDoLogic();
 	const [newTask, setNewTask] = useState('');
 
 	return (
@@ -14,7 +16,14 @@ function ControllableInput({ addTaskWithReact }) {
 					setNewTask(e.target.value);
 				}}
 			/>
-			<button disabled={!newTask} onClick={() => {addTaskWithReact(newTask, setNewTask)}} className="to-do-App__Add-btn">
+			<button
+				disabled={!newTask}
+				onClick={() => {
+					setNewTask('');
+					addTaskWithReact(newTask);
+				}}
+				className="to-do-App__Add-btn"
+			>
 				add
 			</button>
 		</div>
