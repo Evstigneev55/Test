@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 
-const NothingIntersting = () => {
+const ClickMe = () => {
 	const [secret, toogleSecret] = useReducer((prevS) => !prevS, false);
 	return secret ? (
 		<>
@@ -18,4 +18,4 @@ const NothingIntersting = () => {
 	);
 };
 
-export default NothingIntersting;
+export default ClickMe;

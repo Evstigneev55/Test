@@ -1,8 +1,9 @@
-import { useState, useContext } from 'react';
-import { TodoContext } from '../controllers/context';
+import { useState } from 'react';
+
+import { subTodoContext } from 'controllers/context';
 
 function ControllableInput() {
-	const { addTaskWithReact } = useContext(TodoContext);
+	const { addTaskWithReact } = subTodoContext();
 	const [newTask, setNewTask] = useState('');
 
 	return (

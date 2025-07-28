@@ -1,15 +1,15 @@
-import './styles/index.css';
+import './styles/index.css'
 
-import NothingIntersting from './components/secret.jsx';
-import ControllableInput from './components/ControllableInput.jsx';
-import NotDone from './components/NotDone.jsx';
-import Done from './components/Done.jsx';
-import TodoContextProvider from './controllers/context.js';
+import ClickMe from 'components/EasterEgg';
+import TodoContextProvider from 'controllers/context';
+import ControllableInput from 'components/ControllableInput';
+import NotDone from 'components/NotDone';
+import Done from 'components/Done';
 
 const ToDoApp = () => {
 	return (
 		<div className="to-do-App">
-			<NothingIntersting />
+			<ClickMe />
 			<h1 className="to-do-App__h1">to-do App</h1>
 
 			<TodoContextProvider>

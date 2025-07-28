@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { TodoContext } from '../controllers/context';
+import { subTodoContext } from 'controllers/context';
 
 function Done() {
-	const { dispatchDoneT, doneTasks, dispatchNotDoneT } = useContext(TodoContext);
+	const { dispatchDoneT, doneTasks, dispatchNotDoneT } = subTodoContext();
 
 	return (
 		<ol className="to-do-App__ol">
