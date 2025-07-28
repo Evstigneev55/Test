@@ -1,9 +1,10 @@
-import './index.css';
+import './styles/index.css';
 
 import NothingIntersting from './components/secret.jsx';
 import ControllableInput from './components/ControllableInput.jsx';
 import NotDone from './components/NotDone.jsx';
 import Done from './components/Done.jsx';
+import TodoContextProvider from './controllers/context.js';
 
 const ToDoApp = () => {
 	return (
@@ -11,9 +12,11 @@ const ToDoApp = () => {
 			<NothingIntersting />
 			<h1 className="to-do-App__h1">to-do App</h1>
 
-			<ControllableInput />
-			<NotDone />
-			<Done />
+			<TodoContextProvider>
+				<ControllableInput />
+				<NotDone />
+				<Done />
+			</TodoContextProvider>
 		</div>
 	);
 };

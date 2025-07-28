@@ -1,7 +1,8 @@
-import useToDoLogic from '../../../helpers/logic';
+import { useContext } from 'react';
+import { TodoContext } from '../controllers/context';
 
 function Done() {
-	const { dispatchDoneT, doneTasks, dispatchNotDoneT } = useToDoLogic();
+	const { dispatchDoneT, doneTasks, dispatchNotDoneT } = useContext(TodoContext);
 
 	return (
 		<ol className="to-do-App__ol">

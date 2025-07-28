@@ -41,8 +41,8 @@ function reducerTasks(prevTasks: ITask[], action: ActionsPayload): ITask[] {
 }
 
 const useToDoLogic = () => {
-	const [doneTasks, dispatchDoneT] = useReducer(reducerTasks, [], () => initTasksFrom('arrTasksDone'));
-	const [notDoneTasks, dispatchNotDoneT] = useReducer(reducerTasks, [], () => initTasksFrom('arrTasksNotDone'));
+	const [doneTasks, dispatchDoneT] = useReducer(reducerTasks, initTasksFrom('arrTasksDone'));
+	const [notDoneTasks, dispatchNotDoneT] = useReducer(reducerTasks, initTasksFrom('arrTasksNotDone'));
 
 	function addTaskWithReact(newTaskState: string) {
 		if (newTaskState) {
@@ -57,7 +57,6 @@ const useToDoLogic = () => {
 	useEffect(() => {
 		localStorage.setItem('arrTasksDone', JSON.stringify(doneTasks));
 	}, [doneTasks]);
-
 	useEffect(() => {
 		localStorage.setItem('arrTasksNotDone', JSON.stringify(notDoneTasks));
 	}, [notDoneTasks]);
