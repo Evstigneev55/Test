@@ -4,9 +4,6 @@
 //export function...
 //TODO end
 
-//! tasks:
-//- .prettierc (120 length)
-
 import './index.css';
 
 import NothingIntersting from './components/secret.jsx';

@@ -11,6 +11,7 @@ import TravelPlan from './components/docReact/SolutionFromSite.jsx';
 import DocReact_1 from './components/docReact_1';
 import Test_1 from './components/tests/test_1.jsx';
 import Test_2 from './components/tests/test_2.jsx';
+import Todo from '../ToDo/index.js';
 
 
 const LessonPage = () => {
@@ -37,6 +38,8 @@ const LessonPage = () => {
 			return <Test_1 />;
 		case 'test_2':
 			return <Test_2 />;
+		case 'toDo_with_context':
+			return <Todo />;
 	}
 
 	return <Navigate to={'/404'} />;
