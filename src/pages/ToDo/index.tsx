@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import TodoContextProvider, { useTodo } from './context.tsx';
 import './styles.css';
 import NotDone from './components/NotDone.tsx';

@@ -2,7 +2,6 @@ import { useReducer, useState, useEffect } from 'react';
 import Done from '../../../to-do/components/Done';
 import NotDone from '../../../to-do/components/NotDone';
 
-
 function reducerTasks(t, action) {
 	switch (action.type) {
 		case 'del_task':
@@ -15,7 +14,7 @@ function reducerTasks(t, action) {
 		case 'add_task_with_form':
 			return [...t, action.newTaskObj];
 
-		case 'on_Click_Up_Btn':
+		case 'on-click-up-btn':
 			const updatedTasksUp = [...t];
 			[updatedTasksUp[action.index - 1], updatedTasksUp[action.index]] = [
 				updatedTasksUp[action.index],
@@ -47,8 +46,7 @@ const Test_1 = () => {
 	const theLastIncrementId =
 		TASKS.length === 0
 			? 0
-			: TASKS
-					.map((task) => task.id)
+			: TASKS.map((task) => task.id)
 					.sort()
 					.at(-1);
 
@@ -89,7 +87,7 @@ const Test_1 = () => {
 
 	function onClickUpBtn(index) {
 		if (index < 1) return;
-		dispatch({ type: 'on_Click_Up_Btn', index: index });
+		dispatch({ type: 'on-click-up-btn', index: index });
 	}
 
 	function onClickDownBtn(index) {
@@ -108,7 +106,6 @@ const Test_1 = () => {
 
 	return (
 		<div className="to-do-App">
-
 			<h1 className="to-do-App__h1">to-do App</h1>
 
 			{/* controllable input on React START */}

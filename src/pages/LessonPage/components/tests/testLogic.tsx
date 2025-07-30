@@ -4,7 +4,7 @@ import React, { useReducer, useEffect, useRef } from 'react';
 // 	[K in keyof T]: T[K] extends string ? K : never
 // }[keyof T]
 
-// type PossibleCasesReducer = 'del_task' | 'add_task' | 'on_Click_Up_Btn' | 'on_Click_Down_Btn';
+// type PossibleCasesReducer = 'del_task' | 'add_task' | 'on-click-up-btn' | 'on_Click_Down_Btn';
 // interface PossibleActionsReducer {
 // 	type: PossibleCasesReducer;
 // 	newTaskObj: ITask;
@@ -21,7 +21,7 @@ interface ITask {
 type ActionsPayload =
 	| { type: 'del_task'; TaskId: number }
 	| { type: 'add_task'; newTaskObj: ITask }
-	| { type: 'on_Click_Up_Btn'; index: number }
+	| { type: 'on-click-up-btn'; index: number }
 	| { type: 'on_Click_Down_Btn'; index: number };
 
 function reducerTasks(t: ITask[], action: ActionsPayload): ITask[] {
@@ -32,7 +32,7 @@ function reducerTasks(t: ITask[], action: ActionsPayload): ITask[] {
 		case 'add_task':
 			return [...t, action.newTaskObj];
 
-		case 'on_Click_Up_Btn': {
+		case 'on-click-up-btn': {
 			const updatedTasksUp = [...t];
 			[updatedTasksUp[action.index - 1], updatedTasksUp[action.index]] = [
 				updatedTasksUp[action.index],
@@ -56,10 +56,7 @@ function reducerTasks(t: ITask[], action: ActionsPayload): ITask[] {
 
 const useTestDo = () => {
 	const [doneTasks, dispatchDoneT] = useReducer(reducerTasks, initTasksFrom('arrTasksDone'));
-	const [notDoneTasks, dispatchNotDoneT] = useReducer(
-		reducerTasks,
-		initTasksFrom('arrTasksNotDone')
-	);
+	const [notDoneTasks, dispatchNotDoneT] = useReducer(reducerTasks, initTasksFrom('arrTasksNotDone'));
 	const refLastId = useRef<number>(initLatestId([...doneTasks, ...notDoneTasks]));
 
 	//! React.FormEvent<HTMLFormElement>
@@ -68,7 +65,7 @@ const useTestDo = () => {
 
 		//! попробуй убрать as HTMLInputElement | null
 		const newTaskInputElement = document.getElementById('newTaskForm') as HTMLInputElement | null;
-		
+
 		if (!newTaskInputElement) {
 			alert('элемент формы не найден');
 			return;
@@ -91,10 +88,7 @@ const useTestDo = () => {
 		} else alert('Write your task in input area');
 	};
 
-	function addTaskWithReact(
-		newTaskState: string,
-		setNewTaskState: React.Dispatch<React.SetStateAction<string>>
-	) {
+	function addTaskWithReact(newTaskState: string, setNewTaskState: React.Dispatch<React.SetStateAction<string>>) {
 		if (newTaskState) {
 			dispatchNotDoneT({
 				type: 'add_task',
